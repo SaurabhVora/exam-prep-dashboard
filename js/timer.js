@@ -48,6 +48,7 @@ const TimerModule = (() => {
     setTimerVal(elMins,  mins);
     setTimerVal(elSecs,  secs, true);
 
+    // Urgency color
     if (elUrg) {
       if (days > 60) {
         elUrg.textContent = '🟢 Plenty of time — stay consistent!';
@@ -90,9 +91,9 @@ const TimerModule = (() => {
   };
 
   let pomoState = {
-    mode:      'focus',
+    mode:      'focus',   // 'focus' | 'break' | 'long-break'
     running:   false,
-    seconds:   25 * 60,
+    seconds:   POMO.FOCUS_MINS * 60,
     sessions:  parseInt(localStorage.getItem('epdash_pomo_sessions') || '0'),
     interval:  null,
   };
@@ -109,6 +110,7 @@ const TimerModule = (() => {
     const skipBtn   = document.getElementById('pomo-skip');
     const focusBtn  = document.getElementById('pomo-set-focus');
     const breakBtn  = document.getElementById('pomo-set-break');
+
     if (startBtn) startBtn.addEventListener('click', togglePomo);
     if (resetBtn) resetBtn.addEventListener('click', resetPomo);
     if (skipBtn)  skipBtn.addEventListener('click', skipPhase);
@@ -119,6 +121,7 @@ const TimerModule = (() => {
   function togglePomo() {
     pomoState.running = !pomoState.running;
     const btn = document.getElementById('pomo-start');
+
     if (pomoState.running) {
       if (btn) btn.textContent = '⏸ Pause';
       pomoState.interval = setInterval(tickPomo, 1000);
@@ -131,6 +134,7 @@ const TimerModule = (() => {
   function tickPomo() {
     pomoState.seconds--;
     renderPomoDisplay();
+
     if (pomoState.seconds <= 0) {
       clearInterval(pomoState.interval);
       pomoState.running = false;
@@ -144,27 +148,43 @@ const TimerModule = (() => {
       localStorage.setItem('epdash_pomo_sessions', pomoState.sessions);
       renderSessions();
       showToast('🍅 Focus session done! Take a break.', 'success');
+
       const isLong = pomoState.sessions % 4 === 0;
       setMode(isLong ? 'long-break' : 'break');
     } else {
       showToast('☕ Break over! Time to focus again.');
       setMode('focus');
     }
+
+    // Browser notification if allowed
     if (Notification && Notification.permission === 'granted') {
-      new Notification('Pomodoro Timer', { body: pomoState.mode === 'focus' ? 'Break time!' : 'Back to focus!', icon: '🍅' });
+      new Notification('Pomodoro Timer', {
+        body: pomoState.mode === 'focus' ? 'Break time!' : 'Back to focus!',
+        icon: '🍅',
+      });
     }
   }
 
   function setMode(mode) {
     clearInterval(pomoState.interval);
     pomoState.running = false;
-    pomoState.mode = mode;
-    const mins = mode === 'focus' ? POMO.FOCUS_MINS : mode === 'break' ? POMO.BREAK_MINS : POMO.LONG_BREAK;
+    pomoState.mode    = mode;
+
+    const mins = mode === 'focus' ? POMO.FOCUS_MINS
+               : mode === 'break' ? POMO.BREAK_MINS
+               : POMO.LONG_BREAK;
     pomoState.seconds = mins * 60;
+
     const btn = document.getElementById('pomo-start');
     if (btn) btn.textContent = '▶ Start';
+
     const modeLabel = document.getElementById('pomo-mode');
-    if (modeLabel) modeLabel.textContent = mode === 'focus' ? '🍅 Focus Session' : mode === 'break' ? '☕ Short Break' : '🌙 Long Break';
+    if (modeLabel) {
+      modeLabel.textContent = mode === 'focus' ? '🍅 Focus Session'
+                             : mode === 'break' ? '☕ Short Break'
+                             : '🌙 Long Break';
+    }
+
     renderPomoDisplay();
     updatePomoRing();
   }
@@ -172,7 +192,9 @@ const TimerModule = (() => {
   function resetPomo() {
     clearInterval(pomoState.interval);
     pomoState.running = false;
-    const mins = pomoState.mode === 'focus' ? POMO.FOCUS_MINS : pomoState.mode === 'break' ? POMO.BREAK_MINS : POMO.LONG_BREAK;
+    const mins = pomoState.mode === 'focus' ? POMO.FOCUS_MINS
+               : pomoState.mode === 'break' ? POMO.BREAK_MINS
+               : POMO.LONG_BREAK;
     pomoState.seconds = mins * 60;
     const btn = document.getElementById('pomo-start');
     if (btn) btn.textContent = '▶ Start';
@@ -191,20 +213,27 @@ const TimerModule = (() => {
     const m = Math.floor(pomoState.seconds / 60);
     const s = pomoState.seconds % 60;
     const display = document.getElementById('pomo-display');
-    if (display) display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if (display) {
+      display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
     updatePomoRing();
   }
 
   function updatePomoRing() {
     const ring = document.getElementById('pomo-ring-progress');
     if (!ring) return;
-    const totalMins = pomoState.mode === 'focus' ? POMO.FOCUS_MINS : pomoState.mode === 'break' ? POMO.BREAK_MINS : POMO.LONG_BREAK;
+    const totalMins = pomoState.mode === 'focus' ? POMO.FOCUS_MINS
+                    : pomoState.mode === 'break' ? POMO.BREAK_MINS
+                    : POMO.LONG_BREAK;
     const totalSecs = totalMins * 60;
     const pct = pomoState.seconds / totalSecs;
-    const circumference = 2 * Math.PI * 90;
+    const circumference = 2 * Math.PI * 90; // r=90
     ring.style.strokeDashoffset = circumference * (1 - pct);
     ring.style.strokeDasharray  = circumference;
-    const color = pomoState.mode === 'focus' ? '#8b5cf6' : pomoState.mode === 'break' ? '#06b6d4' : '#10b981';
+
+    const color = pomoState.mode === 'focus' ? '#8b5cf6'
+                : pomoState.mode === 'break' ? '#06b6d4'
+                : '#10b981';
     ring.style.stroke = color;
   }
 
@@ -220,8 +249,11 @@ const TimerModule = (() => {
     }
   }
 
+  // Request notification permission
   function requestNotifPermission() {
-    if (Notification && Notification.permission === 'default') Notification.requestPermission();
+    if (Notification && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
   }
 
   return { startCountdowns, initPomodoro, requestNotifPermission };
