@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=1.0.3">
+  <link rel="stylesheet" href="css/styles.css?v=1.0.4">
 </head>
 <body>
 
@@ -231,25 +231,40 @@
           <div style="margin-top:12px;font-size:12px;color:var(--text-muted);text-align:center;">🔍 Hover to see cut-off targets</div>
         </div>
         <div class="flip-back" style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:var(--radius-lg);">
-          <div style="margin-bottom:12px;">
-            <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ibps-secondary);">CUT-OFF TARGETS</span>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="text-secondary">Overall — General</span>
-              <strong style="color:#06b6d4;">65+ / 125</strong>
+          <!-- Top Group -->
+          <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+            <div>
+              <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ibps-secondary);">CUT-OFF TARGETS</span>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="text-secondary">Overall — PwBD (OC)</span>
-              <strong style="color:#22c55e;">60+ / 125</strong>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;">
+                <span class="text-secondary" style="font-size:13px;">Overall — General</span>
+                <strong style="color:#06b6d4;font-size:14px;">65+ / 125</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;">
+                <span class="text-secondary" style="font-size:13px;">Overall — PwBD (OC)</span>
+                <strong style="color:#22c55e;font-size:14px;">60+ / 125</strong>
+              </div>
+              <div style="height:1px;background:rgba(255,255,255,0.06);margin:4px 0;"></div>
+              <div style="font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;">Sectional Cut-offs (PwBD OC):</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:8px;">
+                <span class="text-secondary" style="font-size:12px;">Reasoning</span>
+                <strong style="color:#8b5cf6;font-size:13px;font-weight:700;">3.00–6.75</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:8px;">
+                <span class="text-secondary" style="font-size:12px;">Quant</span>
+                <strong style="color:#06b6d4;font-size:13px;font-weight:700;">5.00–6.75</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:8px;">
+                <span class="text-secondary" style="font-size:12px;">English</span>
+                <strong style="color:#10b981;font-size:13px;font-weight:700;">7.00–8.00</strong>
+              </div>
             </div>
-            <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
-            <div style="font-size:12px;color:var(--text-muted);">Sectional Cut-offs (PwBD OC):</div>
-            <div style="display:flex;justify-content:space-between;"><span class="text-secondary" style="font-size:13px;">Reasoning</span><span style="color:#8b5cf6;font-weight:700;">3.00–6.75</span></div>
-            <div style="display:flex;justify-content:space-between;"><span class="text-secondary" style="font-size:13px;">Quant</span><span style="color:#06b6d4;font-weight:700;">5.00–6.75</span></div>
-            <div style="display:flex;justify-content:space-between;"><span class="text-secondary" style="font-size:13px;">English</span><span style="color:#10b981;font-weight:700;">7.00–8.00</span></div>
           </div>
-          <div style="margin-top:12px;font-size:12px;color:var(--text-muted);text-align:center;">💡 Sectional time limits: 40 min each</div>
+          <!-- Bottom Group (Footer) -->
+          <div style="font-size:11px;color:var(--text-muted);text-align:center;width:100%;border-top:1px solid rgba(255,255,255,0.04);padding-top:8px;">
+            💡 Sectional time limits: 40 min each
+          </div>
         </div>
       </div>
     </div>
@@ -273,24 +288,28 @@
           <div style="margin-top:12px;font-size:12px;color:var(--text-muted);text-align:center;">🔍 Hover to see cut-off targets</div>
         </div>
         <div class="flip-back" style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:var(--radius-lg);">
-          <div style="margin-bottom:12px;">
-            <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ssc-secondary);">CUT-OFF TARGETS</span>
+          <!-- Top Group -->
+          <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+            <div>
+              <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ssc-secondary);">CUT-OFF TARGETS</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;">
+                <span class="text-secondary" style="font-size:13px;">General / UR</span>
+                <strong style="color:#06b6d4;font-size:14px;">150+ / 200</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;">
+                <span class="text-secondary" style="font-size:13px;">PwBD — OH</span>
+                <strong style="color:#22c55e;font-size:14px;">120+ / 200</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;">
+                <span class="text-secondary" style="font-size:13px;">PwBD — HH</span>
+                <strong style="color:#eab308;font-size:14px;">80+ / 200</strong>
+              </div>
+            </div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="text-secondary">General / UR</span>
-              <strong style="color:#06b6d4;">150+ / 200</strong>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="text-secondary">PwBD — OH</span>
-              <strong style="color:#22c55e;">120+ / 200</strong>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="text-secondary">PwBD — HH</span>
-              <strong style="color:#eab308;">80+ / 200</strong>
-            </div>
-          </div>
-          <div style="margin-top:12px;display:flex;flex-direction:column;gap:4px;text-align:center;">
+          <!-- Bottom Group (Footer) -->
+          <div style="display:flex;flex-direction:column;gap:4px;text-align:center;width:100%;border-top:1px solid rgba(255,255,255,0.04);padding-top:8px;">
             <div style="font-size:11px;color:var(--text-muted);">2025 actual cut-off (OH): 100.87 | Target: 120+</div>
             <div style="font-size:11px;color:var(--text-muted);font-weight:500;">No sectional cut-offs — focus on strong subjects!</div>
           </div>
