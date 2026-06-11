@@ -3,17 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExamPrep Dashboard — IBPS SO &amp; SSC CGL 2026</title>
+  <title>ExamPrep Dashboard — IBPS SO & SSC CGL 2026</title>
   <meta name="description" content="Personal exam preparation dashboard for IBPS SO IT Officer and SSC CGL Tier 1 — track topics, countdowns, timetable, mock scores and cut-off calculator.">
   <meta name="theme-color" content="#050510">
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS v4 -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
+<!-- ── Animated Background ──────────────────────────────── -->
 <div class="bg-canvas">
   <div class="bg-orb bg-orb-1"></div>
   <div class="bg-orb bg-orb-2"></div>
@@ -21,11 +28,13 @@
 </div>
 <div class="bg-grid"></div>
 
+<!-- ── Navbar ────────────────────────────────────────────── -->
 <nav class="navbar">
   <a class="nav-logo" href="#">
     <div class="nav-logo-icon">🎯</div>
     <span>ExamPrep <span style="opacity:0.5;">Dashboard</span></span>
   </a>
+
   <div class="nav-links">
     <button class="nav-link" data-scroll-to="section-countdown">⏱ Timers</button>
     <button class="nav-link" data-scroll-to="section-topics">📋 Topics</button>
@@ -34,26 +43,35 @@
     <button class="nav-link" data-scroll-to="section-scores">📊 Scores</button>
     <button class="nav-link" data-scroll-to="section-calc">🎯 Calculator</button>
   </div>
+
   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-    <div class="streak-badge">🔥 Streak: <span id="streak-count">0 days</span></div>
+    <div class="streak-badge">
+      🔥 Streak: <span id="streak-count">0 days</span>
+    </div>
     <button id="btn-reset-all" style="padding:8px 16px;border-radius:10px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);color:#ef4444;font-size:12px;font-weight:600;cursor:pointer;">Reset All</button>
   </div>
 </nav>
 
+<!-- ── App Wrapper ────────────────────────────────────────── -->
 <div class="app-wrapper">
 
-  <!-- HERO -->
+  <!-- ━━━━━━━━━━━━━━━ HERO ━━━━━━━━━━━━━━━ -->
   <div class="hero">
-    <div class="hero-badge">🎓 2026 Exam Preparation Dashboard</div>
+    <div class="hero-badge">
+      🎓 2026 Exam Preparation Dashboard
+    </div>
     <h1 class="hero-title">
       <span class="gradient-text-ibps">IBPS SO</span>
       <span style="color:rgba(255,255,255,0.3);margin:0 12px">+</span>
-      <span class="gradient-text-ssc">SSC CGL</span><br>Prep Command Center
+      <span class="gradient-text-ssc">SSC CGL</span>
+      <br>Prep Command Center
     </h1>
     <p class="hero-subtitle">
       Track every topic, manage your time, and reach your target scores.<br>
       Built for <strong style="color:var(--ibps-secondary)">PwBD (OC/OH)</strong> — every step matters.
     </p>
+
+    <!-- Global Progress Rings -->
     <div class="progress-ring-container">
       <div class="progress-ring-wrap">
         <svg width="100" height="100" class="progress-ring-svg">
@@ -64,6 +82,7 @@
         <span class="ring-label">Overall</span>
         <span class="text-sm text-secondary" id="global-sub">0 / 0 topics</span>
       </div>
+
       <div class="progress-ring-wrap">
         <svg width="80" height="80" class="progress-ring-svg">
           <circle class="progress-ring-circle ring-bg" cx="40" cy="40" r="33" stroke-width="5"/>
@@ -72,6 +91,7 @@
         </svg>
         <span class="ring-label" style="font-size:11px">IBPS Reasoning</span>
       </div>
+
       <div class="progress-ring-wrap">
         <svg width="80" height="80" class="progress-ring-svg">
           <circle class="progress-ring-circle ring-bg" cx="40" cy="40" r="33" stroke-width="5"/>
@@ -80,6 +100,7 @@
         </svg>
         <span class="ring-label" style="font-size:11px">IBPS Quant</span>
       </div>
+
       <div class="progress-ring-wrap">
         <svg width="80" height="80" class="progress-ring-svg">
           <circle class="progress-ring-circle ring-bg" cx="40" cy="40" r="33" stroke-width="5"/>
@@ -88,6 +109,7 @@
         </svg>
         <span class="ring-label" style="font-size:11px">SSC Reasoning</span>
       </div>
+
       <div class="progress-ring-wrap">
         <svg width="80" height="80" class="progress-ring-svg">
           <circle class="progress-ring-circle ring-bg" cx="40" cy="40" r="33" stroke-width="5"/>
@@ -96,6 +118,7 @@
         </svg>
         <span class="ring-label" style="font-size:11px">SSC GK</span>
       </div>
+
       <div class="progress-ring-wrap">
         <svg width="80" height="80" class="progress-ring-svg">
           <circle class="progress-ring-circle ring-bg" cx="40" cy="40" r="33" stroke-width="5"/>
@@ -107,191 +130,414 @@
     </div>
   </div>
 
-  <!-- COUNTDOWN TIMERS -->
+  <!-- ━━━━━━━━━━━━━━━ COUNTDOWN TIMERS ━━━━━━━━━━━━━━━ -->
   <div id="section-countdown" style="scroll-margin-top:80px;">
-    <div class="section-divider"><div class="section-divider-line"></div><h2 class="section-divider-title">⏱ Exam Countdowns</h2><div class="section-divider-line"></div></div>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <h2 class="section-divider-title">⏱ Exam Countdowns</h2>
+      <div class="section-divider-line"></div>
+    </div>
+
     <div class="timers-grid">
+      <!-- IBPS SO Timer -->
       <div class="glass-card glass-card-ibps timer-card">
         <div class="timer-exam-label gradient-text-ibps">IBPS SO IT Officer</div>
         <div class="timer-title">Preliminary Examination</div>
         <div class="timer-date">📅 August 29, 2026 · 9:00 AM</div>
         <div class="timer-digits">
-          <div class="timer-unit"><div class="timer-number gradient-text-ibps" id="ibps-days">--</div><div class="timer-unit-label">Days</div></div>
-          <div class="timer-unit"><div class="timer-number" id="ibps-hours">--</div><div class="timer-unit-label">Hours</div></div>
-          <div class="timer-unit"><div class="timer-number" id="ibps-mins">--</div><div class="timer-unit-label">Mins</div></div>
-          <div class="timer-unit"><div class="timer-number" id="ibps-secs">--</div><div class="timer-unit-label">Secs</div></div>
+          <div class="timer-unit">
+            <div class="timer-number">
+              <span class="gradient-text-ibps" id="ibps-days">--</span>
+            </div>
+            <div class="timer-unit-label">Days</div>
+          </div>
+          <div class="timer-unit">
+            <div class="timer-number" id="ibps-hours">--</div>
+            <div class="timer-unit-label">Hours</div>
+          </div>
+          <div class="timer-unit">
+            <div class="timer-number" id="ibps-mins">--</div>
+            <div class="timer-unit-label">Mins</div>
+          </div>
+          <div class="timer-unit">
+            <div class="timer-number" id="ibps-secs">--</div>
+            <div class="timer-unit-label">Secs</div>
+          </div>
         </div>
-        <div class="timer-urgency" id="ibps-urgency"></div>
+        <div class="timer-urgency" id="ibps-urgency" style="margin-top:20px;padding:8px 20px;border-radius:100px;font-size:13px;font-weight:600;"></div>
+        <!-- Exam Quick Info -->
         <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
-          <span class="meta-chip">150 Questions</span><span class="meta-chip">125 Marks</span><span class="meta-chip">120 min</span><span class="meta-chip">-0.25 neg</span>
+          <span class="meta-chip">150 Questions</span>
+          <span class="meta-chip">125 Marks</span>
+          <span class="meta-chip">120 min</span>
+          <span class="meta-chip">-0.25 neg</span>
         </div>
       </div>
+
+      <!-- SSC CGL Timer -->
       <div class="glass-card glass-card-ssc timer-card">
         <div class="timer-exam-label gradient-text-ssc">SSC CGL Tier 1</div>
         <div class="timer-title">Computer-Based Examination</div>
         <div class="timer-date">📅 Aug–Sep 2026 (Tentative)</div>
         <div class="timer-digits">
-          <div class="timer-unit"><div class="timer-number gradient-text-ssc" id="ssc-days">--</div><div class="timer-unit-label">Days</div></div>
-          <div class="timer-unit"><div class="timer-number" id="ssc-hours">--</div><div class="timer-unit-label">Hours</div></div>
-          <div class="timer-unit"><div class="timer-number" id="ssc-mins">--</div><div class="timer-unit-label">Mins</div></div>
-          <div class="timer-unit"><div class="timer-number" id="ssc-secs">--</div><div class="timer-unit-label">Secs</div></div>
+          <div class="timer-unit">
+            <div class="timer-number">
+              <span class="gradient-text-ssc" id="ssc-days">--</span>
+            </div>
+            <div class="timer-unit-label">Days</div>
+          </div>
+          <div class="timer-unit">
+            <div class="timer-number" id="ssc-hours">--</div>
+            <div class="timer-unit-label">Hours</div>
+          </div>
+          <div class="timer-unit">
+            <div class="timer-number" id="ssc-mins">--</div>
+            <div class="timer-unit-label">Mins</div>
+          </div>
+          <div class="timer-unit">
+            <div class="timer-number" id="ssc-secs">--</div>
+            <div class="timer-unit-label">Secs</div>
+          </div>
         </div>
-        <div class="timer-urgency" id="ssc-urgency"></div>
+        <div class="timer-urgency" id="ssc-urgency" style="margin-top:20px;padding:8px 20px;border-radius:100px;font-size:13px;font-weight:600;"></div>
         <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
-          <span class="meta-chip">100 Questions</span><span class="meta-chip">200 Marks</span><span class="meta-chip">60 min</span><span class="meta-chip">-0.50 neg</span>
+          <span class="meta-chip">100 Questions</span>
+          <span class="meta-chip">200 Marks</span>
+          <span class="meta-chip">60 min</span>
+          <span class="meta-chip">-0.50 neg</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- FLIP INFO CARDS -->
+  <!-- ━━━━━━━━━━━━━━━ EXAM INFO FLIP CARDS ━━━━━━━━━━━━━━━ -->
   <div class="grid-2 mt-8">
-    <div class="flip-card"><div class="flip-card-inner">
-      <div class="flip-front glass-card glass-card-ibps">
-        <div style="margin-bottom:16px;"><span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ibps-secondary);">IBPS SO IT OFFICER PRELIMS</span></div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Sections</span><strong>3 (Reasoning + Quant + English)</strong></div>
-          <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Total Questions</span><strong>150</strong></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Total Marks</span><strong>125</strong></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Duration</span><strong>120 min (40/section)</strong></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Negative Marking</span><strong style="color:#ef4444;">-0.25 per wrong</strong></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">English Marks/Q</span><strong>0.5</strong></div>
+    <!-- IBPS SO Info Card -->
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-front glass-card glass-card-ibps">
+          <div style="margin-bottom:16px;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ibps-secondary);">IBPS SO IT OFFICER PRELIMS</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Sections</span><strong>3 (Reasoning + Quant + English)</strong></div>
+            <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Total Questions</span><strong>150</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Total Marks</span><strong>125</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Duration</span><strong>120 min (40/section)</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Negative Marking</span><strong style="color:#ef4444;">-0.25 per wrong</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">English Marks/Q</span><strong>0.5</strong></div>
+          </div>
+          <div style="margin-top:16px;font-size:12px;color:var(--text-muted);text-align:center;">🔄 Hover to see cut-off targets</div>
         </div>
-        <div style="margin-top:16px;font-size:12px;color:var(--text-muted);text-align:center;">🔄 Hover to see cut-off targets</div>
-      </div>
-      <div class="flip-back" style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:var(--radius-lg);">
-        <div style="margin-bottom:16px;"><span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ibps-secondary);">CUT-OFF TARGETS</span></div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;"><span class="text-secondary">Overall — General</span><strong style="color:#06b6d4;">65+ / 125</strong></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;"><span class="text-secondary">Overall — PwBD (OC)</span><strong style="color:#22c55e;">60+ / 125</strong></div>
-          <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
-          <div style="font-size:12px;color:var(--text-muted);">Sectional Cut-offs (PwBD OC):</div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Reasoning</span><span style="color:#8b5cf6;font-weight:700;">3.00–6.75</span></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Quant</span><span style="color:#06b6d4;font-weight:700;">5.00–6.75</span></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">English</span><span style="color:#10b981;font-weight:700;">7.00–8.00</span></div>
-        </div>
-      </div>
-    </div></div>
-    <div class="flip-card"><div class="flip-card-inner">
-      <div class="flip-front glass-card glass-card-ssc">
-        <div style="margin-bottom:16px;"><span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ssc-secondary);">SSC CGL TIER 1</span></div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Sections</span><strong>4 (Reasoning + Quant + English + GK)</strong></div>
-          <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Total Questions</span><strong>100</strong></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Total Marks</span><strong>200</strong></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Duration</span><strong>60 min (no sectional limit)</strong></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Negative Marking</span><strong style="color:#ef4444;">-0.50 per wrong</strong></div>
-          <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Marks per Question</span><strong>2</strong></div>
-        </div>
-        <div style="margin-top:16px;font-size:12px;color:var(--text-muted);text-align:center;">🔄 Hover to see cut-off targets</div>
-      </div>
-      <div class="flip-back" style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:var(--radius-lg);">
-        <div style="margin-bottom:16px;"><span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ssc-secondary);">CUT-OFF TARGETS</span></div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;"><span class="text-secondary">General / UR</span><strong style="color:#06b6d4;">150+ / 200</strong></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;"><span class="text-secondary">PwBD — OH</span><strong style="color:#22c55e;">120+ / 200</strong></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;"><span class="text-secondary">PwBD — HH</span><strong style="color:#eab308;">80+ / 200</strong></div>
-          <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
-          <div style="font-size:12px;color:var(--text-muted);">2025 actual cut-off (OH): 100.87 | Target: 120+</div>
-          <div style="font-size:12px;color:var(--text-muted);">No sectional cut-offs — use strong subjects to compensate!</div>
+        <div class="flip-back" style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:var(--radius-lg);">
+          <div style="margin-bottom:16px;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ibps-secondary);">CUT-OFF TARGETS</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="text-secondary">Overall — General</span>
+              <strong style="color:#06b6d4;">65+ / 125</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="text-secondary">Overall — PwBD (OC)</span>
+              <strong style="color:#22c55e;">60+ / 125</strong>
+            </div>
+            <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
+            <div style="font-size:12px;color:var(--text-muted);">Sectional Cut-offs (PwBD OC):</div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary" style="font-size:13px;">Reasoning</span><span style="color:#8b5cf6;font-weight:700;">3.00–6.75</span></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary" style="font-size:13px;">Quant</span><span style="color:#06b6d4;font-weight:700;">5.00–6.75</span></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary" style="font-size:13px;">English</span><span style="color:#10b981;font-weight:700;">7.00–8.00</span></div>
+          </div>
         </div>
       </div>
-    </div></div>
+    </div>
+
+    <!-- SSC CGL Info Card -->
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-front glass-card glass-card-ssc">
+          <div style="margin-bottom:16px;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ssc-secondary);">SSC CGL TIER 1</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Sections</span><strong>4 (Reasoning + Quant + English + GK)</strong></div>
+            <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Total Questions</span><strong>100</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Total Marks</span><strong>200</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Duration</span><strong>60 min (no sectional limit)</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Negative Marking</span><strong style="color:#ef4444;">-0.50 per wrong</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-secondary">Marks per Question</span><strong>2</strong></div>
+          </div>
+          <div style="margin-top:16px;font-size:12px;color:var(--text-muted);text-align:center;">🔄 Hover to see cut-off targets</div>
+        </div>
+        <div class="flip-back" style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:var(--radius-lg);">
+          <div style="margin-bottom:16px;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--ssc-secondary);">CUT-OFF TARGETS</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="text-secondary">General / UR</span>
+              <strong style="color:#06b6d4;">150+ / 200</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="text-secondary">PwBD — OH</span>
+              <strong style="color:#22c55e;">120+ / 200</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="text-secondary">PwBD — HH</span>
+              <strong style="color:#eab308;">80+ / 200</strong>
+            </div>
+            <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
+            <div style="font-size:12px;color:var(--text-muted);">2025 actual cut-off (OH): 100.87 | Target: 120+</div>
+            <div style="font-size:12px;color:var(--text-muted);">No sectional cut-offs — use strong subjects to compensate!</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- TOPIC CHECKLISTS -->
+  <!-- ━━━━━━━━━━━━━━━ TOPICS ━━━━━━━━━━━━━━━ -->
   <div id="section-topics" style="scroll-margin-top:80px;">
-    <div class="section-divider"><div class="section-divider-line"></div><h2 class="section-divider-title">📋 Topic Checklists</h2><div class="section-divider-line"></div></div>
-    <div class="tab-nav">
-      <button class="tab-btn active-common" data-tab-group="topics" data-tab-target="tab-common" data-tab-active="active-common">🔗 Common Topics <span style="font-size:11px;opacity:0.7;margin-left:4px;">(Both Exams)</span></button>
-      <button class="tab-btn" data-tab-group="topics" data-tab-target="tab-ibps" data-tab-active="active-ibps">📘 IBPS SO <span style="font-size:11px;opacity:0.7;margin-left:4px;">(IT Officer)</span></button>
-      <button class="tab-btn" data-tab-group="topics" data-tab-target="tab-ssc" data-tab-active="active-ssc">📗 SSC CGL <span style="font-size:11px;opacity:0.7;margin-left:4px;">(Tier 1)</span></button>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <h2 class="section-divider-title">📋 Topic Checklists</h2>
+      <div class="section-divider-line"></div>
     </div>
+
+    <!-- Tab Nav -->
+    <div class="tab-nav">
+      <button class="tab-btn active-common" data-tab-group="topics" data-tab-target="tab-common" data-tab-active="active-common">
+        🔗 Common Topics
+        <span style="font-size:11px;opacity:0.7;margin-left:4px;">(Both Exams)</span>
+      </button>
+      <button class="tab-btn" data-tab-group="topics" data-tab-target="tab-ibps" data-tab-active="active-ibps">
+        📘 IBPS SO
+        <span style="font-size:11px;opacity:0.7;margin-left:4px;">(IT Officer)</span>
+      </button>
+      <button class="tab-btn" data-tab-group="topics" data-tab-target="tab-ssc" data-tab-active="active-ssc">
+        📗 SSC CGL
+        <span style="font-size:11px;opacity:0.7;margin-left:4px;">(Tier 1)</span>
+      </button>
+    </div>
+
+    <!-- Common Topics Panel -->
     <div class="tab-panel active" id="tab-common" data-tab-panel="topics">
       <div class="glass-card p-6">
         <div class="section-header" style="background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2);">
-          <div class="section-title"><div class="section-icon" style="background:rgba(245,158,11,0.15);">🔗</div><div><div>Common Topics — Study Once, Score in Both!</div><div style="font-size:12px;font-weight:400;color:var(--text-muted);margin-top:2px;">These topics overlap between IBPS SO and SSC CGL</div></div></div>
+          <div class="section-title">
+            <div class="section-icon" style="background:rgba(245,158,11,0.15);">🔗</div>
+            <div>
+              <div>Common Topics — Study Once, Score in Both!</div>
+              <div style="font-size:12px;font-weight:400;color:var(--text-muted);margin-top:2px;">These topics overlap between IBPS SO and SSC CGL</div>
+            </div>
+          </div>
           <div class="section-meta">
-            <div style="display:flex;align-items:center;gap:8px;"><svg width="36" height="36" class="mini-ring"><circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/><circle cx="18" cy="18" r="14" fill="none" id="ring_common_sec" stroke="#f59e0b" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/></svg><span class="mini-progress-text" style="color:#f59e0b" id="pct_common">0%</span></div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="36" height="36" class="mini-ring">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" id="ring_common_sec" stroke="#f59e0b" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/>
+              </svg>
+              <span class="mini-progress-text" style="color:#f59e0b" id="pct_common">0%</span>
+            </div>
             <span class="meta-chip">12 Topics</span>
           </div>
         </div>
         <div class="topic-list" id="common_topics"></div>
       </div>
     </div>
+
+    <!-- IBPS SO Panel -->
     <div class="tab-panel" id="tab-ibps" data-tab-panel="topics">
+      <!-- Reasoning -->
       <div class="glass-card glass-card-ibps p-6 mb-6">
         <div class="section-header" style="background:rgba(139,92,246,0.06);border-color:rgba(139,92,246,0.2);">
-          <div class="section-title"><div class="section-icon" style="background:rgba(139,92,246,0.15);">🧩</div><div><div>Reasoning Ability</div><div style="font-size:12px;font-weight:400;color:var(--text-muted);">50 Questions · 50 Marks · 40 min</div></div></div>
+          <div class="section-title">
+            <div class="section-icon" style="background:rgba(139,92,246,0.15);">🧩</div>
+            <div>
+              <div>Reasoning Ability</div>
+              <div style="font-size:12px;font-weight:400;color:var(--text-muted);">50 Questions · 50 Marks · 40 min</div>
+            </div>
+          </div>
           <div class="section-meta">
-            <div style="display:flex;align-items:center;gap:8px;"><svg width="36" height="36" class="mini-ring"><circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/><circle cx="18" cy="18" r="14" fill="none" id="ring_ibps_reasoning_sec" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/></svg><span class="mini-progress-text gradient-text-ibps" id="pct_ibps_reasoning">0%</span></div>
-            <span class="meta-chip">Cut-off (PwBD): 3–6.75</span><span class="meta-chip">General: 6.5–11.25</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="36" height="36" class="mini-ring">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" id="ring_ibps_reasoning_sec" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/>
+              </svg>
+              <span class="mini-progress-text gradient-text-ibps" id="pct_ibps_reasoning">0%</span>
+            </div>
+            <span class="meta-chip">Cut-off (PwBD): 3–6.75</span>
+            <span class="meta-chip">General: 6.5–11.25</span>
           </div>
         </div>
         <div class="topic-list" id="ibps_reasoning_topics"></div>
       </div>
+
+      <!-- Quant -->
       <div class="glass-card glass-card-ssc p-6 mb-6">
         <div class="section-header" style="background:rgba(6,182,212,0.06);border-color:rgba(6,182,212,0.2);">
-          <div class="section-title"><div class="section-icon" style="background:rgba(6,182,212,0.15);">📐</div><div><div>Quantitative Aptitude</div><div style="font-size:12px;font-weight:400;color:var(--text-muted);">50 Questions · 50 Marks · 40 min</div></div></div>
+          <div class="section-title">
+            <div class="section-icon" style="background:rgba(6,182,212,0.15);">📐</div>
+            <div>
+              <div>Quantitative Aptitude</div>
+              <div style="font-size:12px;font-weight:400;color:var(--text-muted);">50 Questions · 50 Marks · 40 min</div>
+            </div>
+          </div>
           <div class="section-meta">
-            <div style="display:flex;align-items:center;gap:8px;"><svg width="36" height="36" class="mini-ring"><circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/><circle cx="18" cy="18" r="14" fill="none" id="ring_ibps_quant_sec" stroke="#06b6d4" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/></svg><span class="mini-progress-text gradient-text-ssc" id="pct_ibps_quant">0%</span></div>
-            <span class="meta-chip">Cut-off (PwBD): 5–6.75</span><span class="meta-chip">General: 8–10.25</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="36" height="36" class="mini-ring">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" id="ring_ibps_quant_sec" stroke="#06b6d4" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/>
+              </svg>
+              <span class="mini-progress-text gradient-text-ssc" id="pct_ibps_quant">0%</span>
+            </div>
+            <span class="meta-chip">Cut-off (PwBD): 5–6.75</span>
+            <span class="meta-chip">General: 8–10.25</span>
           </div>
         </div>
         <div class="topic-list" id="ibps_quant_topics"></div>
       </div>
+
+      <!-- English -->
       <div class="glass-card p-6" style="box-shadow:var(--shadow-glass),0 0 40px rgba(16,185,129,0.12);">
         <div class="section-header" style="background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);">
-          <div class="section-title"><div class="section-icon" style="background:rgba(16,185,129,0.15);">📖</div><div><div>English Language</div><div style="font-size:12px;font-weight:400;color:var(--text-muted);">50 Questions · 25 Marks (0.5/Q) · 40 min</div></div></div>
+          <div class="section-title">
+            <div class="section-icon" style="background:rgba(16,185,129,0.15);">📖</div>
+            <div>
+              <div>English Language</div>
+              <div style="font-size:12px;font-weight:400;color:var(--text-muted);">50 Questions · 25 Marks (0.5/Q) · 40 min</div>
+            </div>
+          </div>
           <div class="section-meta">
-            <div style="display:flex;align-items:center;gap:8px;"><svg width="36" height="36" class="mini-ring"><circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/><circle cx="18" cy="18" r="14" fill="none" id="ring_ibps_english_sec" stroke="#10b981" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/></svg><span class="mini-progress-text" style="color:#10b981" id="pct_ibps_english">0%</span></div>
-            <span class="meta-chip">Cut-off (PwBD): 7–8</span><span class="meta-chip">General: 10.25–10.50</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="36" height="36" class="mini-ring">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" id="ring_ibps_english_sec" stroke="#10b981" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/>
+              </svg>
+              <span class="mini-progress-text" style="color:#10b981" id="pct_ibps_english">0%</span>
+            </div>
+            <span class="meta-chip">Cut-off (PwBD): 7–8</span>
+            <span class="meta-chip">General: 10.25–10.50</span>
           </div>
         </div>
         <div class="topic-list" id="ibps_english_topics"></div>
       </div>
     </div>
+
+    <!-- SSC CGL Panel -->
     <div class="tab-panel" id="tab-ssc" data-tab-panel="topics">
+      <!-- General Intelligence & Reasoning -->
       <div class="glass-card glass-card-ibps p-6 mb-6">
         <div class="section-header" style="background:rgba(139,92,246,0.06);border-color:rgba(139,92,246,0.2);">
-          <div class="section-title"><div class="section-icon" style="background:rgba(139,92,246,0.15);">🧠</div><div><div>General Intelligence &amp; Reasoning</div><div style="font-size:12px;font-weight:400;color:var(--text-muted);">25 Questions · 50 Marks · Shared time</div></div></div>
-          <div class="section-meta"><div style="display:flex;align-items:center;gap:8px;"><svg width="36" height="36" class="mini-ring"><circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/><circle cx="18" cy="18" r="14" fill="none" id="ring_ssc_gr_sec" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/></svg><span class="mini-progress-text gradient-text-ibps" id="pct_ssc_gr">0%</span></div><span class="meta-chip">No sectional cut-off</span></div>
+          <div class="section-title">
+            <div class="section-icon" style="background:rgba(139,92,246,0.15);">🧠</div>
+            <div>
+              <div>General Intelligence & Reasoning</div>
+              <div style="font-size:12px;font-weight:400;color:var(--text-muted);">25 Questions · 50 Marks · Shared time</div>
+            </div>
+          </div>
+          <div class="section-meta">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="36" height="36" class="mini-ring">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" id="ring_ssc_gr_sec" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/>
+              </svg>
+              <span class="mini-progress-text gradient-text-ibps" id="pct_ssc_gr">0%</span>
+            </div>
+            <span class="meta-chip">No sectional cut-off</span>
+          </div>
         </div>
         <div class="topic-list" id="ssc_gr_topics"></div>
       </div>
+
+      <!-- Quantitative Aptitude -->
       <div class="glass-card glass-card-ssc p-6 mb-6">
         <div class="section-header" style="background:rgba(6,182,212,0.06);border-color:rgba(6,182,212,0.2);">
-          <div class="section-title"><div class="section-icon" style="background:rgba(6,182,212,0.15);">📊</div><div><div>Quantitative Aptitude</div><div style="font-size:12px;font-weight:400;color:var(--text-muted);">25 Questions · 50 Marks · Shared time</div></div></div>
-          <div class="section-meta"><div style="display:flex;align-items:center;gap:8px;"><svg width="36" height="36" class="mini-ring"><circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/><circle cx="18" cy="18" r="14" fill="none" id="ring_ssc_sq_sec" stroke="#06b6d4" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/></svg><span class="mini-progress-text gradient-text-ssc" id="pct_ssc_sq">0%</span></div></div>
+          <div class="section-title">
+            <div class="section-icon" style="background:rgba(6,182,212,0.15);">📊</div>
+            <div>
+              <div>Quantitative Aptitude</div>
+              <div style="font-size:12px;font-weight:400;color:var(--text-muted);">25 Questions · 50 Marks · Shared time</div>
+            </div>
+          </div>
+          <div class="section-meta">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="36" height="36" class="mini-ring">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" id="ring_ssc_sq_sec" stroke="#06b6d4" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/>
+              </svg>
+              <span class="mini-progress-text gradient-text-ssc" id="pct_ssc_sq">0%</span>
+            </div>
+          </div>
         </div>
         <div class="topic-list" id="ssc_sq_topics"></div>
       </div>
+
+      <!-- English Comprehension -->
       <div class="glass-card p-6 mb-6" style="box-shadow:var(--shadow-glass),0 0 40px rgba(16,185,129,0.12);">
         <div class="section-header" style="background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);">
-          <div class="section-title"><div class="section-icon" style="background:rgba(16,185,129,0.15);">&#9997;&#65039;</div><div><div>English Comprehension</div><div style="font-size:12px;font-weight:400;color:var(--text-muted);">25 Questions · 50 Marks · Shared time</div></div></div>
-          <div class="section-meta"><div style="display:flex;align-items:center;gap:8px;"><svg width="36" height="36" class="mini-ring"><circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/><circle cx="18" cy="18" r="14" fill="none" id="ring_ssc_se_sec" stroke="#10b981" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/></svg><span class="mini-progress-text" style="color:#10b981" id="pct_ssc_se">0%</span></div></div>
+          <div class="section-title">
+            <div class="section-icon" style="background:rgba(16,185,129,0.15);">✍️</div>
+            <div>
+              <div>English Comprehension</div>
+              <div style="font-size:12px;font-weight:400;color:var(--text-muted);">25 Questions · 50 Marks · Shared time</div>
+            </div>
+          </div>
+          <div class="section-meta">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="36" height="36" class="mini-ring">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" id="ring_ssc_se_sec" stroke="#10b981" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/>
+              </svg>
+              <span class="mini-progress-text" style="color:#10b981" id="pct_ssc_se">0%</span>
+            </div>
+          </div>
         </div>
         <div class="topic-list" id="ssc_se_topics"></div>
       </div>
+
+      <!-- General Awareness -->
       <div class="glass-card p-6" style="box-shadow:var(--shadow-glass),0 0 40px rgba(245,158,11,0.12);">
         <div class="section-header" style="background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2);">
-          <div class="section-title"><div class="section-icon" style="background:rgba(245,158,11,0.15);">🌍</div><div><div>General Awareness</div><div style="font-size:12px;font-weight:400;color:var(--text-muted);">25 Questions · 50 Marks · Shared time</div></div></div>
-          <div class="section-meta"><div style="display:flex;align-items:center;gap:8px;"><svg width="36" height="36" class="mini-ring"><circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/><circle cx="18" cy="18" r="14" fill="none" id="ring_ssc_ga_sec" stroke="#f59e0b" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/></svg><span class="mini-progress-text" style="color:#f59e0b" id="pct_ssc_ga">0%</span></div></div>
+          <div class="section-title">
+            <div class="section-icon" style="background:rgba(245,158,11,0.15);">🌍</div>
+            <div>
+              <div>General Awareness</div>
+              <div style="font-size:12px;font-weight:400;color:var(--text-muted);">25 Questions · 50 Marks · Shared time</div>
+            </div>
+          </div>
+          <div class="section-meta">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <svg width="36" height="36" class="mini-ring">
+                <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+                <circle cx="18" cy="18" r="14" fill="none" id="ring_ssc_ga_sec" stroke="#f59e0b" stroke-width="3" stroke-dasharray="88" stroke-dashoffset="88" stroke-linecap="round"/>
+              </svg>
+              <span class="mini-progress-text" style="color:#f59e0b" id="pct_ssc_ga">0%</span>
+            </div>
+          </div>
         </div>
         <div class="topic-list" id="ssc_ga_topics"></div>
       </div>
     </div>
   </div>
 
-  <!-- TIMETABLE -->
+  <!-- ━━━━━━━━━━━━━━━ TIMETABLE ━━━━━━━━━━━━━━━ -->
   <div id="section-timetable" style="scroll-margin-top:80px;">
-    <div class="section-divider"><div class="section-divider-line"></div><h2 class="section-divider-title">📅 Study Timetable</h2><div class="section-divider-line"></div></div>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <h2 class="section-divider-title">📅 Study Timetable</h2>
+      <div class="section-divider-line"></div>
+    </div>
+
     <div class="glass-card p-6">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
-        <div><h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">Weekly Study Planner</h3><p class="text-sm text-secondary">Click any slot to add your study session. 📍 = Today's column</p></div>
+        <div>
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">Weekly Study Planner</h3>
+          <p class="text-sm text-secondary">Click any slot to add your study session. 📍 = Today's column</p>
+        </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <!-- Subject Legend -->
           <span style="display:flex;align-items:center;gap:4px;font-size:12px;"><span style="width:12px;height:12px;border-radius:3px;background:#8b5cf6;display:inline-block;"></span>Reasoning</span>
           <span style="display:flex;align-items:center;gap:4px;font-size:12px;"><span style="width:12px;height:12px;border-radius:3px;background:#06b6d4;display:inline-block;"></span>Quant</span>
           <span style="display:flex;align-items:center;gap:4px;font-size:12px;"><span style="width:12px;height:12px;border-radius:3px;background:#22c55e;display:inline-block;"></span>English</span>
@@ -300,16 +546,26 @@
           <button id="tt-clear" style="padding:6px 14px;border-radius:8px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);color:#ef4444;font-size:12px;font-weight:600;cursor:pointer;">Clear Week</button>
         </div>
       </div>
-      <div style="overflow-x:auto;"><div class="timetable-grid" id="timetable-grid" style="min-width:700px;"></div></div>
+
+      <div style="overflow-x:auto;">
+        <div class="timetable-grid" id="timetable-grid" style="min-width:700px;"></div>
+      </div>
     </div>
   </div>
 
-  <!-- POMODORO -->
+  <!-- ━━━━━━━━━━━━━━━ POMODORO ━━━━━━━━━━━━━━━ -->
   <div id="section-pomodoro" style="scroll-margin-top:80px;">
-    <div class="section-divider"><div class="section-divider-line"></div><h2 class="section-divider-title">🍅 Pomodoro Timer</h2><div class="section-divider-line"></div></div>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <h2 class="section-divider-title">🍅 Pomodoro Timer</h2>
+      <div class="section-divider-line"></div>
+    </div>
+
     <div class="grid-2">
       <div class="glass-card glass-card-ibps pomodoro-card">
         <div class="pomodoro-mode" id="pomo-mode">🍅 Focus Session</div>
+
+        <!-- Circular ring -->
         <div class="pomodoro-ring">
           <svg width="220" height="220" class="pomodoro-svg">
             <circle cx="110" cy="110" r="90" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
@@ -319,78 +575,158 @@
             <div class="pomodoro-display" id="pomo-display">25:00</div>
           </div>
         </div>
+
         <div class="pomodoro-controls">
           <button class="btn-secondary" id="pomo-set-focus">🍅 Focus</button>
           <button class="btn-primary" id="pomo-start">▶ Start</button>
           <button class="btn-secondary" id="pomo-set-break">☕ Break</button>
         </div>
+
         <div class="pomodoro-controls" style="margin-top:0;">
           <button class="btn-secondary" id="pomo-reset">🔄 Reset</button>
           <button class="btn-secondary" id="pomo-skip">⏭ Skip</button>
         </div>
+
+        <!-- Session dots -->
         <div style="margin-top:20px;">
           <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;text-align:center;">Sessions completed today</div>
           <div class="pomodoro-sessions" id="pomo-sessions"></div>
         </div>
       </div>
+
+      <!-- Pomodoro Tips -->
       <div class="glass-card p-6" style="display:flex;flex-direction:column;gap:16px;">
         <h3 style="font-size:1.1rem;font-weight:700;">⚡ Pomodoro Study Tips</h3>
         <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="padding:14px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:12px;"><div style="font-weight:600;margin-bottom:4px;">🍅 25 min Focus</div><div class="text-sm text-secondary">Study one topic deeply. No distractions — phone face down, notifications off.</div></div>
-          <div style="padding:14px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:12px;"><div style="font-weight:600;margin-bottom:4px;">☕ 5 min Break</div><div class="text-sm text-secondary">Stand up, hydrate, look away from the screen. Rest your eyes &amp; brain.</div></div>
-          <div style="padding:14px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:12px;"><div style="font-weight:600;margin-bottom:4px;">🌙 Every 4 sessions → Long Break</div><div class="text-sm text-secondary">Take a 15-minute break after 4 focus sessions. Go for a short walk.</div></div>
-          <div style="padding:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:12px;"><div style="font-weight:600;margin-bottom:4px;">🎯 Daily Target</div><div class="text-sm text-secondary">Aim for 8–10 Pomodoro sessions per day. That's 3.5–4.5 hrs of focused study.</div></div>
+          <div style="padding:14px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:12px;">
+            <div style="font-weight:600;margin-bottom:4px;">🍅 25 min Focus</div>
+            <div class="text-sm text-secondary">Study one topic deeply. No distractions — phone face down, notifications off.</div>
+          </div>
+          <div style="padding:14px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);border-radius:12px;">
+            <div style="font-weight:600;margin-bottom:4px;">☕ 5 min Break</div>
+            <div class="text-sm text-secondary">Stand up, hydrate, look away from the screen. Rest your eyes & brain.</div>
+          </div>
+          <div style="padding:14px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:12px;">
+            <div style="font-weight:600;margin-bottom:4px;">🌙 Every 4 sessions → Long Break</div>
+            <div class="text-sm text-secondary">Take a 15-minute break after 4 focus sessions. Go for a short walk.</div>
+          </div>
+          <div style="padding:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:12px;">
+            <div style="font-weight:600;margin-bottom:4px;">🎯 Daily Target</div>
+            <div class="text-sm text-secondary">Aim for 8–10 Pomodoro sessions per day. That's 3.5–4.5 hrs of focused study.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SCORES -->
+  <!-- ━━━━━━━━━━━━━━━ MOCK TEST SCORES ━━━━━━━━━━━━━━━ -->
   <div id="section-scores" style="scroll-margin-top:80px;">
-    <div class="section-divider"><div class="section-divider-line"></div><h2 class="section-divider-title">📊 Mock Test Score Logger</h2><div class="section-divider-line"></div></div>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <h2 class="section-divider-title">📊 Mock Test Score Logger</h2>
+      <div class="section-divider-line"></div>
+    </div>
+
     <div class="glass-card p-6">
       <form id="score-form">
         <div class="score-entry-form">
-          <div class="form-group"><label class="form-label" for="score-exam">Exam</label><select class="form-select" id="score-exam"><option value="ibps">IBPS SO IT Officer</option><option value="ssc">SSC CGL Tier 1</option></select></div>
-          <div class="form-group"><label class="form-label" for="score-value">Your Score</label><input class="form-input" id="score-value" type="number" placeholder="e.g. 78" min="0" max="200" required></div>
-          <div class="form-group"><label class="form-label" for="score-date">Date</label><input class="form-input" id="score-date" type="date" required></div>
-          <div class="form-group" style="justify-content:flex-end;"><button type="submit" class="btn-primary" style="width:100%;border-radius:12px;">+ Log Score</button></div>
+          <div class="form-group">
+            <label class="form-label" for="score-exam">Exam</label>
+            <select class="form-select" id="score-exam">
+              <option value="ibps">IBPS SO IT Officer</option>
+              <option value="ssc">SSC CGL Tier 1</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="score-value">Your Score</label>
+            <input class="form-input" id="score-value" type="number" placeholder="e.g. 78" min="0" max="200" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="score-date">Date</label>
+            <input class="form-input" id="score-date" type="date" required>
+          </div>
+          <div class="form-group" style="justify-content:flex-end;">
+            <button type="submit" class="btn-primary" style="width:100%;border-radius:12px;">
+              + Log Score
+            </button>
+          </div>
         </div>
       </form>
+
       <div style="margin:24px 0 8px;font-size:12px;color:var(--text-muted);">Score Trend — Purple = IBPS SO · Cyan = SSC CGL</div>
-      <div class="score-chart-container"><canvas id="score-chart" class="score-chart-canvas"></canvas></div>
+      <div class="score-chart-container">
+        <canvas id="score-chart" class="score-chart-canvas"></canvas>
+      </div>
+
       <div style="margin-top:24px;margin-bottom:12px;font-size:14px;font-weight:600;">Recent Entries</div>
       <div class="score-entries-list" id="score-list"></div>
     </div>
   </div>
 
-  <!-- CALCULATOR -->
+  <!-- ━━━━━━━━━━━━━━━ CUT-OFF CALCULATOR ━━━━━━━━━━━━━━━ -->
   <div id="section-calc" style="scroll-margin-top:80px;">
-    <div class="section-divider"><div class="section-divider-line"></div><h2 class="section-divider-title">🎯 Cut-off Calculator</h2><div class="section-divider-line"></div></div>
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <h2 class="section-divider-title">🎯 Cut-off Calculator</h2>
+      <div class="section-divider-line"></div>
+    </div>
+
     <div class="glass-card p-6">
       <p class="text-sm text-secondary mb-6">Enter your mock test attempt data to instantly see if you'd clear the cut-off.</p>
+
       <div class="calc-inputs">
-        <div class="form-group"><label class="form-label" for="calc-exam">Select Exam</label><select class="form-select" id="calc-exam"><option value="ibps">IBPS SO IT Officer (125 Marks)</option><option value="ssc">SSC CGL Tier 1 (200 Marks)</option></select></div>
-        <div class="form-group"><label class="form-label" for="calc-attempted">Questions Attempted</label><input class="form-input" id="calc-attempted" type="number" placeholder="e.g. 120" min="0"></div>
-        <div class="form-group"><label class="form-label" for="calc-correct">Correct Answers</label><input class="form-input" id="calc-correct" type="number" placeholder="e.g. 85" min="0"></div>
-        <div class="form-group" style="justify-content:flex-end;"><button class="btn-primary" id="calc-btn" style="width:100%;border-radius:12px;">⚡ Calculate</button></div>
+        <div class="form-group">
+          <label class="form-label" for="calc-exam">Select Exam</label>
+          <select class="form-select" id="calc-exam">
+            <option value="ibps">IBPS SO IT Officer (125 Marks)</option>
+            <option value="ssc">SSC CGL Tier 1 (200 Marks)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="calc-attempted">Questions Attempted</label>
+          <input class="form-input" id="calc-attempted" type="number" placeholder="e.g. 120" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="calc-correct">Correct Answers</label>
+          <input class="form-input" id="calc-correct" type="number" placeholder="e.g. 85" min="0">
+        </div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <button class="btn-primary" id="calc-btn" style="width:100%;border-radius:12px;">⚡ Calculate</button>
+        </div>
       </div>
+
       <div class="calc-result neutral" id="calc-result">
         <div style="font-size:13px;color:var(--text-muted);">Your Net Score</div>
         <div class="calc-score-display" id="calc-score-display">—</div>
         <div id="calc-status" style="font-size:14px;color:var(--text-secondary);">Enter your data and click Calculate</div>
         <div class="calc-breakdown" id="calc-breakdown"></div>
       </div>
+
+      <!-- Cut-off Reference Table -->
       <div style="margin-top:28px;">
         <div style="font-size:14px;font-weight:600;margin-bottom:12px;">📋 Quick Cut-off Reference</div>
         <div class="grid-2">
-          <div style="padding:16px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.2);border-radius:12px;"><div style="font-size:12px;font-weight:700;letter-spacing:1px;color:var(--ibps-secondary);margin-bottom:10px;">IBPS SO (Out of 125)</div><div style="display:flex;flex-direction:column;gap:6px;font-size:13px;"><div style="display:flex;justify-content:space-between;"><span class="text-secondary">General/UR</span><strong>65+ marks</strong></div><div style="display:flex;justify-content:space-between;"><span class="text-secondary">PwBD (OC)</span><strong style="color:#22c55e;">60+ marks</strong></div></div></div>
-          <div style="padding:16px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:12px;"><div style="font-size:12px;font-weight:700;letter-spacing:1px;color:var(--ssc-secondary);margin-bottom:10px;">SSC CGL (Out of 200)</div><div style="display:flex;flex-direction:column;gap:6px;font-size:13px;"><div style="display:flex;justify-content:space-between;"><span class="text-secondary">General/UR</span><strong>150+ marks</strong></div><div style="display:flex;justify-content:space-between;"><span class="text-secondary">PwBD (OH)</span><strong style="color:#22c55e;">120+ marks</strong></div><div style="display:flex;justify-content:space-between;"><span class="text-secondary">PwBD (HH)</span><strong style="color:#eab308;">80+ marks</strong></div></div></div>
+          <div style="padding:16px;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.2);border-radius:12px;">
+            <div style="font-size:12px;font-weight:700;letter-spacing:1px;color:var(--ibps-secondary);margin-bottom:10px;">IBPS SO (Out of 125)</div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;">
+              <div style="display:flex;justify-content:space-between;"><span class="text-secondary">General/UR</span><strong>65+ marks</strong></div>
+              <div style="display:flex;justify-content:space-between;"><span class="text-secondary">PwBD (OC)</span><strong style="color:#22c55e;">60+ marks</strong></div>
+            </div>
+          </div>
+          <div style="padding:16px;background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:12px;">
+            <div style="font-size:12px;font-weight:700;letter-spacing:1px;color:var(--ssc-secondary);margin-bottom:10px;">SSC CGL (Out of 200)</div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;">
+              <div style="display:flex;justify-content:space-between;"><span class="text-secondary">General/UR</span><strong>150+ marks</strong></div>
+              <div style="display:flex;justify-content:space-between;"><span class="text-secondary">PwBD (OH)</span><strong style="color:#22c55e;">120+ marks</strong></div>
+              <div style="display:flex;justify-content:space-between;"><span class="text-secondary">PwBD (HH)</span><strong style="color:#eab308;">80+ marks</strong></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ── Footer ────────────────────────────────────────────── -->
   <footer style="text-align:center;padding:48px 0 24px;color:var(--text-muted);font-size:13px;">
     <div style="margin-bottom:8px;font-size:1.5rem;">🎯</div>
     <div style="margin-bottom:4px;font-weight:600;color:var(--text-secondary);">You've got this, Saurabh!</div>
@@ -398,13 +734,18 @@
     <div style="margin-top:16px;opacity:0.5;">ExamPrep Dashboard · Built with ❤️ · <a href="https://github.com/SaurabhVora/exam-prep-dashboard" target="_blank" style="color:inherit;">GitHub</a></div>
   </footer>
 
-</div>
+</div><!-- /app-wrapper -->
 
+<!-- ─── Timetable Modal ────────────────────────────────────── -->
 <div class="modal-overlay" id="tt-modal">
   <div class="modal-box">
     <h3 class="modal-title" id="tt-modal-title">Add Study Session</h3>
-    <div class="form-group mb-4"><label class="form-label" for="tt-label">Session Label</label><input class="form-input" id="tt-label" type="text" placeholder="e.g. Reasoning - Puzzles" maxlength="40"></div>
-    <div class="form-group"><label class="form-label" for="tt-subject">Subject Color</label>
+    <div class="form-group mb-4">
+      <label class="form-label" for="tt-label">Session Label</label>
+      <input class="form-input" id="tt-label" type="text" placeholder="e.g. Reasoning - Puzzles" maxlength="40">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="tt-subject">Subject Color</label>
       <select class="form-select" id="tt-subject">
         <option value="reasoning">🧩 Reasoning (Violet)</option>
         <option value="quant">📐 Quantitative Aptitude (Cyan)</option>
@@ -423,6 +764,7 @@
   </div>
 </div>
 
+<!-- ─── Scripts ───────────────────────────────────────────── -->
 <script src="js/checklist.js"></script>
 <script src="js/timer.js"></script>
 <script src="js/timetable.js"></script>
