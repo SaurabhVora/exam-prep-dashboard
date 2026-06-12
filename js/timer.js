@@ -142,7 +142,34 @@ const TimerModule = (() => {
     }
   }
 
+  function playAlertSound() {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      
+      osc.type = 'sine'; // gentle bell-like sound
+      osc.frequency.setValueAtTime(880, ctx.currentTime); // A5 note
+      osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.8);
+      
+      gainNode.gain.setValueAtTime(0.5, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+      
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + 0.8);
+    } catch(e) {
+      console.warn('Audio play failed', e);
+    }
+  }
+
   function handlePhaseEnd() {
+    playAlertSound();
+
     if (pomoState.mode === 'focus') {
       pomoState.sessions++;
       localStorage.setItem('epdash_pomo_sessions', pomoState.sessions);
